@@ -18,6 +18,7 @@ public class App {
         } else {
             System.out.println("Encontrado");
         }
-        
+        System.out.println(ab.getHeight());
+        System.out.println(ab.getWeith());
     }
 }

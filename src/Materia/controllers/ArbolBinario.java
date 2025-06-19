@@ -5,6 +5,7 @@ import Materia.models.Node;
 public class ArbolBinario {
     
     private Node root;
+    private int weight;
 
     public ArbolBinario(){
         this.root = null;
@@ -12,6 +13,7 @@ public class ArbolBinario {
     
     public void insert(int value){
         root = insertRec(root, value);
+        weight++;
     }
 
     private Node insertRec(Node padre, int value){
@@ -30,6 +32,7 @@ public class ArbolBinario {
 
     public void imprimirArbol(){
         imprimirPreOrder(root);
+        imprimirInOrder(root);
     }
 
     private void imprimirInOrder(Node node){
@@ -52,6 +55,10 @@ public class ArbolBinario {
         return buscarRec(root,value);
     }
 
+    public int getWeith(){
+        return weight;
+    }
+
     private boolean buscarRec(Node node, int value){
         if(node == null) return false;
         if(node.getValue() == value) return true;
@@ -59,4 +66,17 @@ public class ArbolBinario {
         if(value>node.getValue()) return buscarRec(node.getRight(), value);
         return false;
     }
+
+    public int getHeight(){
+        return getHeightRec(root);
+    }
+
+    private int getHeightRec(Node node){
+        if(node==null) return 0;
+        int leftHeight = getHeightRec(node.getLeft());
+        int rightHeight = getHeightRec(node.getRight());
+        return Math.max(leftHeight, rightHeight) + 1;        
+    }
+
+    
 }
