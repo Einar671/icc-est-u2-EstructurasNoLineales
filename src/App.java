@@ -11,14 +11,23 @@ public class App {
         ab.insert(54);
         ab.insert(14);
         ab.insert(19);
+        System.out.println("Nombre: Einar Kaalhus");
+        System.out.println("\nPeso del arbol = "+ab.getWeith());
+        System.out.println("Altura es = "+ab.getHeight());
+        System.out.println("\nArbol InOrder");
+        ab.imprimirArbolInOrder();
+        System.out.println("\n\nArbol InOrder con alturas");
+        ab.imprimirArbolInOrderwithHeigths();
+        System.out.println("\n\nArbol InOrder con Factor de Equilibrio");
+        ab.imprimirArbolInOrderWithBF();
+        System.out.println("\n\nArbol equilibrado = "+ab.isBalanced());
+        System.out.println("Agregamos valor = 15");
+        ab.insert(15);
+        System.out.println("\n\nArbol InOrder con Factor de Equilibrio");
+        ab.imprimirArbolInOrderWithBF();
+        System.out.println("\n\nArbol equilibrado = "+ab.isBalanced());
+        ab.getNodosNoBalaceados();
 
-        ab.imprimirArbol();
-        if(!ab.buscar(23)){
-            System.out.println("no encontrado");
-        } else {
-            System.out.println("Encontrado");
-        }
-        System.out.println(ab.getHeight());
-        System.out.println(ab.getWeith());
+        
     }
 }

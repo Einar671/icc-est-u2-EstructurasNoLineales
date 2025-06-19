@@ -1,14 +1,21 @@
 package Materia.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Materia.models.Node;
 
 public class ArbolBinario {
     
     private Node root;
     private int weight;
+    private List<Node> nodosNoBalaceados;
+    private boolean isBalanced;
 
     public ArbolBinario(){
         this.root = null;
+        this.nodosNoBalaceados = new ArrayList<Node>();
+        this.isBalanced = true;
     }
     
     public void insert(int value){
@@ -30,16 +37,36 @@ public class ArbolBinario {
         return padre;
     } 
 
-    public void imprimirArbol(){
-        imprimirPreOrder(root);
-        imprimirInOrder(root);
+    public void imprimirArbolInOrderWithBF(){
+        imprimirInOrderwithBf(root);
     }
 
+    public void imprimirArbolInOrder(){
+        imprimirInOrder(root);
+    }
+    public void imprimirArbolInOrderwithHeigths(){
+        imprimirArbolInOrderwithHeigths(root);
+    }
+    
+    private void imprimirArbolInOrderwithHeigths(Node node){
+        if(node !=null){
+            imprimirArbolInOrderwithHeigths(node.getLeft());
+            System.out.print(node.getValue()+"(h= "+ getHeightRec(node)+"), ");
+            imprimirArbolInOrderwithHeigths(node.getRight());
+        }
+    }
     private void imprimirInOrder(Node node){
         if(node !=null){
             imprimirInOrder(node.getLeft());
             System.out.print(node.getValue()+", ");
             imprimirInOrder(node.getRight());
+        }
+    }
+    private void imprimirInOrderwithBf(Node node){
+        if(node !=null){
+            imprimirInOrderwithBf(node.getLeft());
+            System.out.print(node.getValue()+"(bf= "+getBF(node)+"), ");
+            imprimirInOrderwithBf(node.getRight());
         }
     }
     
@@ -51,13 +78,26 @@ public class ArbolBinario {
         }
     }
 
-    public boolean buscar(int value){
-        return buscarRec(root,value);
+    public void getNodosNoBalaceados(){
+        List<Node> copia = new ArrayList<>(nodosNoBalaceados); // ✅ copia segura
+        for (Node nodo : copia) {
+            System.out.println("Nodos no equilibrados= "+nodo.getValue() + " (fE = " + getBF(nodo) + ")");
+        }
     }
 
     public int getWeith(){
         return weight;
     }
+
+    public boolean isBalanced(){
+        return isBalanced;
+    }
+
+    public boolean buscar(int value){
+        return buscarRec(root,value);
+    }
+
+
 
     private boolean buscarRec(Node node, int value){
         if(node == null) return false;
@@ -77,6 +117,23 @@ public class ArbolBinario {
         int rightHeight = getHeightRec(node.getRight());
         return Math.max(leftHeight, rightHeight) + 1;        
     }
+
+    
+
+    private int getBF(Node node){
+        if (node == null) return 0;
+        int left = getHeightRec(node.getLeft());
+        int right = getHeightRec(node.getRight());
+        int factor = left-right;
+        if (factor < -1 || factor > 1) {
+            isBalanced = false;
+            nodosNoBalaceados.add(node);
+        }
+        return factor;
+    }
+
+
+
 
     
 }
